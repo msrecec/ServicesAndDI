@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { AccountsService } from '../accounts.service';
 import { LoggingService } from '../logging.service';
 
 @Component({
@@ -6,27 +7,20 @@ import { LoggingService } from '../logging.service';
   templateUrl: './new-account.component.html',
   styleUrls: ['./new-account.component.css'],
   /**
-   * Step 2 : Add Service to the providers
+   * No need to add AccountsService because parent component already injected it
    *
    */
   providers: [LoggingService]
 })
 export class NewAccountComponent {
-  @Output() accountAdded = new EventEmitter<{name: string, status: string}>();
 
-  /**
-   * Step 1 : Add Service to the constructor
-   *
-   * @param loggingService
-   */
 
-  constructor(private loggingService: LoggingService) {}
+  constructor(private loggingService: LoggingService, private accountsService: AccountsService) {}
 
   onCreateAccount(accountName: string, accountStatus: string) {
-    this.accountAdded.emit({
-      name: accountName,
-      status: accountStatus
-    });
+
+    this.accountsService.addAccount(accountName, accountStatus);
+
     this.loggingService.logStatusChange(accountStatus);
   }
 }
