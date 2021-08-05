@@ -16,7 +16,18 @@ export class NewAccountComponent {
   constructor(
     private loggingService: LoggingService,
     private accountsService: AccountsService
-  ) {}
+  ) {
+    /**
+     * Cross component communication with EventEmitter
+     *
+     * Catches the event emitted via account.component
+     *
+     */
+
+    this.accountsService.statusUpdated.subscribe((status: string) =>
+      alert("New Status: " + status)
+    );
+  }
 
   onCreateAccount(accountName: string, accountStatus: string) {
     this.accountsService.addAccount(accountName, accountStatus);

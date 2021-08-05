@@ -24,5 +24,12 @@ export class AccountComponent {
   onSetTo(status: string) {
     this.accountsService.updateStatus(this.id, status);
     // this.loggingService.logStatusChange(status);
+
+    /**
+     * Emitts an event when clicking to a component
+     *
+     */
+
+    this.accountsService.statusUpdated.emit(status);
   }
 }
